@@ -7,7 +7,7 @@ import io.micronaut.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Controller("/main")
+@Controller("/ilivalidator")
 public class MainController {
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
