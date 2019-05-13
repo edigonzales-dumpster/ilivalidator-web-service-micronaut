@@ -1,0 +1,11 @@
+---
+micronaut:
+  application:
+    name: ilivalidator-web-service
+
+---
+micronaut:
+  io:
+    watch:
+      paths: src/main
+      restart: true
