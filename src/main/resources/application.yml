@@ -13,8 +13,8 @@ micronaut:
         paths: classpath:META-INF/resources/webjars
         mapping: /webjars/**
 ---
-micronaut:
-  io:
-    watch:
-      paths: src/main
-      restart: true
+# micronaut:
+#   io:
+#     watch:
+#       paths: src/main
+#       restart: true
