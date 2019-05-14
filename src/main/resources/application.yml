@@ -2,7 +2,16 @@
 micronaut:
   application:
     name: ilivalidator-web-service
-
+  views:
+    folder: templates
+  router:
+    static-resources:
+      static:
+        paths: classpath:static/resources
+        mapping: /resources/**
+      webjars:
+        paths: classpath:META-INF/resources/webjars
+        mapping: /webjars/**
 ---
 micronaut:
   io:
