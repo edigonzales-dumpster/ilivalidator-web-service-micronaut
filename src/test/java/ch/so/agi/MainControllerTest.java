@@ -24,25 +24,25 @@ import java.io.File;
 @MicronautTest
 public class MainControllerTest {
 
-//    @Inject
-//    EmbeddedServer embeddedServer;
+    @Inject
+    EmbeddedServer embeddedServer;
     
-    static EmbeddedServer embeddedServer;
-
-    @BeforeAll
-    public static void setup() {
-        ApplicationContext context = ApplicationContext.run(
-                "micronaut.http.client.read-timeout:5ms"
-        );
-        embeddedServer = context.getBean(EmbeddedServer.class).start();
-    }
-
-    @AfterAll
-    public static void cleanup() {
-        if (embeddedServer != null) {
-            embeddedServer.stop();
-        }
-    }
+//    static EmbeddedServer embeddedServer;
+//
+//    @BeforeAll
+//    public static void setup() {
+//        ApplicationContext context = ApplicationContext.run(
+//                "micronaut.http.client.read-timeout:5ms"
+//        );
+//        embeddedServer = context.getBean(EmbeddedServer.class).start();
+//    }
+//
+//    @AfterAll
+//    public static void cleanup() {
+//        if (embeddedServer != null) {
+//            embeddedServer.stop();
+//        }
+//    }
 
 
     @Test
@@ -54,7 +54,7 @@ public class MainControllerTest {
     
     @Test
     public void validation_Ok() throws Exception {
-        try(HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient.class, embeddedServer.getURL())) {
+        try(HttpClient client = embeddedServer.getApplicationContext()..createBean(HttpClient.class, embeddedServer.getURL())) {
 
             final MultipartBody body = MultipartBody.builder()
                     .addPart("file", new File("src/test/data/254900.itf"))
