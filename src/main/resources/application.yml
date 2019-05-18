@@ -16,7 +16,10 @@ micronaut:
     max-request-size: 52428800
     multipart:
       max-file-size: 52428800
-
+  http:
+    client:
+      read-timeout: 0
+      connect-timeout: 0
 ---
 # micronaut:
 #   io:

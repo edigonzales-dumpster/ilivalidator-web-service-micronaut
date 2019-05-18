@@ -32,7 +32,7 @@ public class MainControllerTest {
     @BeforeAll
     public static void setup() {
         ApplicationContext context = ApplicationContext.run(
-                "micronaut.http.client.read-timeout:1s"
+                "micronaut.http.client.read-timeout:5ms"
         );
         embeddedServer = context.getBean(EmbeddedServer.class).start();
     }
