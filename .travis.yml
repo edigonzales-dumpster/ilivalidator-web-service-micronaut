@@ -12,7 +12,7 @@ branches:
 install: true
 
 script:
-  - ./gradlew test -i  
+  - ./gradlew test -d -s  
   - ./docker-build.sh $TRAVIS_COMMIT $TRAVIS_BUILD_NUMBER
 
 deploy:

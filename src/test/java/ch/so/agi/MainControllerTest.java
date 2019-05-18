@@ -46,12 +46,6 @@ public class MainControllerTest {
 
     @Test
     public void testIndex() throws Exception {
-//        ApplicationContext context = ApplicationContext.run(
-//                "micronaut.http.client.readTimeout:3s"
-//        );
-//        
-//        EmbeddedServer embeddedServer = context.getBean(EmbeddedServer.class).start();
-        
         try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {
             assertEquals(HttpStatus.OK, client.toBlocking().exchange("/ilivalidator").status());
         }
