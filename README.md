@@ -1,4 +1,6 @@
-# ilivalidator-web-service-micronaut
+[![Build Status](https://travis-ci.org/edigonzales/ilivalidator-web-service-micronaut.svg?branch=master)](https://travis-ci.org/edigonzales/ilivalidator-web-service-micronaut)
+
+# ilivalidator-web-service-micronaut 
 
 ```
 mn create-app --features=graal-native-image --features file-watch ch.so.agi.ilivalidator 
