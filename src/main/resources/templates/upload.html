@@ -17,13 +17,13 @@
 		    <div class="row justify-content-sm-center">
 			    <div class="col-sm-6 col-md-7">
 			    
-			        <form method="POST" th:action="@{/ilivalidator}" enctype="multipart/form-data">
+			        <form method="POST" id="frmUpload" th:action="@{/ilivalidator}" enctype="multipart/form-data">
 			            <div class="custom-file mb-3">
 			                <input type="file" class="custom-file-input" name="file" id="file">
 			                <label class="custom-file-label" for="file">Choose file</label>
 			            </div>
 			            <div class="mt-3">
-			                <button type="submit" class="btn btn-primary">Submit</button>
+			                <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
 			            </div>
 			        </form>
 			       
@@ -37,9 +37,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       
     <script>
-        $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        $(document).ready(function () {
+            // We need to reset form fields for the case the user
+            // hits the back button after a validation. Without
+            // reseting the custom-file-input on event ist not
+            // fired.
+            $("#frmUpload")[0].reset();
+
+            $("#frmUpload").submit(function (e) {
+                $("#btnSubmit").attr("disabled", true);
+                return true;
+            });
+            
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });            
         });
     </script>
       

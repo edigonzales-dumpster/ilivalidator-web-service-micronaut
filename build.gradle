@@ -46,6 +46,7 @@ dependencies {
     
     compile "io.micronaut:micronaut-views"
     compile "org.thymeleaf:thymeleaf:3.0.11.RELEASE"
+    compile "ch.interlis:ilivalidator:1.11.1-SNAPSHOT"        
 }
 
 test.classpath += configurations.developmentOnly

@@ -15,14 +15,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ch.so.agi.ilivalidator.services.IlivalidatorService;
 
 @Controller("/ilivalidator")
 public class MainController {
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private static String FOLDER_PREFIX = "ilivalidator_";
+
+    @Inject
+    IlivalidatorService ilivalidatorService;
 
     @Get("/")
     @View("upload")
@@ -41,17 +48,22 @@ public class MainController {
 
             byte[] bytes = file.getBytes();
             Files.write(uploadFilePath, bytes);
+            String uploadFileName = uploadFilePath.toFile().getAbsolutePath();
+            log.info(uploadFileName);
             
-            log.info(uploadFilePath.toFile().getAbsolutePath());
- 
+            String logFileName = uploadFilePath.toFile().getAbsolutePath() + ".log";
+            log.info(logFileName);
+
+            boolean valid = ilivalidatorService.validate(uploadFileName, logFileName);
+            Path logFilePath = Paths.get(logFileName);
+            String logFileContent = new String(Files.readAllBytes(logFilePath));
+
+            return HttpResponse.ok(logFileContent).header("Content-Type", "text/plain; charset=utf-8")
+                    .contentLength(logFilePath.toFile().length());      
         } catch (IOException e) {
             e.printStackTrace();
             log.error(e.getMessage());
             return HttpResponse.badRequest("Something went wrong.\n\n" + e.getMessage());
         }
-        
-        
-        return HttpResponse.ok("fubar");
     }
-
 }
