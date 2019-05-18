@@ -13,9 +13,9 @@ micronaut:
         paths: classpath:META-INF/resources/webjars
         mapping: /webjars/**
   server:
-    maxRequestSize: 50MB
+    max-request-size: 52428800
     multipart:
-      maxFileSize: 50MB
+      max-file-size: 52428800
 
 ---
 # micronaut:

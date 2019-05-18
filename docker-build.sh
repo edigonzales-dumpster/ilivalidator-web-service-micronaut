@@ -1,6 +1,6 @@
 #!/bin/sh
-docker build . -t ilivalidator
+docker build . -t sogis/ilivalidator-web-service-micronaut
 echo
 echo
 echo "To run the docker container execute:"
-echo "    $ docker run -p 8080:8080 ilivalidator"
+echo "    $ docker run -p 8080:8080 sogis/ilivalidator-web-service-micronaut"
