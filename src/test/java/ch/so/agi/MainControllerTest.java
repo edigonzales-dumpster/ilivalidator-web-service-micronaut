@@ -54,7 +54,7 @@ public class MainControllerTest {
     
     @Test
     public void validation_Ok() throws Exception {
-        try(HttpClient client = embeddedServer.getApplicationContext()..createBean(HttpClient.class, embeddedServer.getURL())) {
+        try(HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient.class, embeddedServer.getURL())) {
 
             final MultipartBody body = MultipartBody.builder()
                     .addPart("file", new File("src/test/data/254900.itf"))
