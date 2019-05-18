@@ -9,6 +9,8 @@ import io.micronaut.http.client.multipart.MultipartBody;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.test.annotation.MicronautTest;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
@@ -17,17 +19,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 @MicronautTest
 public class MainControllerTest {
 
-    @Inject
-    EmbeddedServer embeddedServer;
+//    @Inject
+//    EmbeddedServer embeddedServer;
+    
+    static EmbeddedServer embeddedServer;
+
+    @BeforeAll
+    public static void setup() {
+        ApplicationContext context = ApplicationContext.run(
+                "micronaut.http.client.read-timeout:120s"
+        );
+        embeddedServer = context.getBean(EmbeddedServer.class).start();
+    }
+
+    @AfterAll
+    public static void cleanup() {
+        if (embeddedServer != null) {
+            embeddedServer.stop();
+        }
+    }
+
 
     @Test
     public void testIndex() throws Exception {
+//        ApplicationContext context = ApplicationContext.run(
+//                "micronaut.http.client.readTimeout:3s"
+//        );
+//        
+//        EmbeddedServer embeddedServer = context.getBean(EmbeddedServer.class).start();
+        
         try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {
             assertEquals(HttpStatus.OK, client.toBlocking().exchange("/ilivalidator").status());
         }
