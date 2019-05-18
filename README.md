@@ -8,8 +8,8 @@ mn create-controller Main
 ```
 
 ```
-./gradlew assemble
-./docker-build.sh
+./gradlew assemble test
+./docker-build.sh $TRAVIS_COMMIT $TRAVIS_BUILD_NUMBER
 docker run --memory=1024M -p 8080:8080 sogis/ilivalidator-web-service-micronaut
 ```
 
