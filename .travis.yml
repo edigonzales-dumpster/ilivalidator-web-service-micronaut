@@ -1,0 +1,23 @@
+sudo: required
+
+language: java
+
+services:
+  - docker
+  
+branches:
+  only:
+    - master
+
+install: true
+
+script:
+  - ./gradlew assemble test 
+  - ./docker-build.sh
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin ; docker push sogis/ilivalidator-web-service-micronaut
+    on:
+      branch: master
