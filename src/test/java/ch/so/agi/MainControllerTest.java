@@ -4,6 +4,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.multipart.MultipartBody;
 import io.micronaut.runtime.server.EmbeddedServer;
@@ -31,7 +32,7 @@ public class MainControllerTest {
     @BeforeAll
     public static void setup() {
         ApplicationContext context = ApplicationContext.run(
-                "micronaut.http.client.read-timeout:120s"
+                "micronaut.http.client.read-timeout:1s"
         );
         embeddedServer = context.getBean(EmbeddedServer.class).start();
     }
@@ -46,14 +47,14 @@ public class MainControllerTest {
 
     @Test
     public void testIndex() throws Exception {
-        try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {
+        try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {            
             assertEquals(HttpStatus.OK, client.toBlocking().exchange("/ilivalidator").status());
         }
     }
     
     @Test
     public void validation_Ok() throws Exception {
-        try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {
+        try(HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient.class, embeddedServer.getURL())) {
 
             final MultipartBody body = MultipartBody.builder()
                     .addPart("file", new File("src/test/data/254900.itf"))
