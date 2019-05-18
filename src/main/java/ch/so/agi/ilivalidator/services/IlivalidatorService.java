@@ -12,13 +12,17 @@ import ch.ehi.basics.settings.Settings;
 public class IlivalidatorService {
     private static final Logger log = LoggerFactory.getLogger(IlivalidatorService.class);
 
-    public boolean validate(String inputFileName, String logFileName) {
+    public boolean validate(String inputFileName, String logFileName, String allObjectsAccessible) {
         log.info("Validating...");
         log.info(inputFileName);
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_ILIDIRS, Validator.SETTING_DEFAULT_ILIDIRS);
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+
+        if (allObjectsAccessible != null) {
+            settings.setValue(Validator.SETTING_ALL_OBJECTS_ACCESSIBLE, Validator.TRUE);
+        }
 
         boolean valid = Validator.runValidation(inputFileName, settings);
         return valid;

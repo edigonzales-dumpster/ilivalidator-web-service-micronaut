@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -34,19 +35,20 @@ public class MainController {
     @Get("/")
     @View("upload")
     public HttpStatus index() {
-        System.out.println("bar");
         return HttpStatus.OK;
     }
     
     @Post(value = "/", consumes = MediaType.MULTIPART_FORM_DATA, produces = MediaType.TEXT_PLAIN) 
     @View("upload")
-    public HttpResponse<String> validate(CompletedFileUpload file) {
-        System.out.println("fubar");
-        try {
+    public HttpResponse<String> validate(CompletedFileUpload file, Optional<String> allObjectsAccessible) {
+        try {           
+            String validateExternalObjects = allObjectsAccessible.orElse(null);
+            
             Path tmpDirectory = Files.createTempDirectory(Paths.get(System.getProperty("java.io.tmpdir")), FOLDER_PREFIX);
             Path uploadFilePath = Paths.get(tmpDirectory.toString(), file.getFilename());
 
             byte[] bytes = file.getBytes();
+            System.out.println(bytes);
             Files.write(uploadFilePath, bytes);
             String uploadFileName = uploadFilePath.toFile().getAbsolutePath();
             log.info(uploadFileName);
@@ -54,7 +56,7 @@ public class MainController {
             String logFileName = uploadFilePath.toFile().getAbsolutePath() + ".log";
             log.info(logFileName);
 
-            boolean valid = ilivalidatorService.validate(uploadFileName, logFileName);
+            boolean valid = ilivalidatorService.validate(uploadFileName, logFileName, validateExternalObjects);
             Path logFilePath = Paths.get(logFileName);
             String logFileContent = new String(Files.readAllBytes(logFilePath));
 
